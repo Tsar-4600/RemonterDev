@@ -1,0 +1,883 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="RepairServiceDevModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Branches">
+          <Key>
+            <PropertyRef Name="id_branch" />
+          </Key>
+          <Property Name="id_branch" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name_branch" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="address" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Device">
+          <Key>
+            <PropertyRef Name="id_device" />
+          </Key>
+          <Property Name="id_device" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name_device" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="model_device" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="dateOfDevelopment" Type="date" Nullable="false" />
+          <Property Name="id_branch" Type="int" Nullable="false" />
+          <Property Name="time_branch_approach" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Messages">
+          <Key>
+            <PropertyRef Name="id_message" />
+          </Key>
+          <Property Name="id_message" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="from_id_staff_member" Type="int" Nullable="false" />
+          <Property Name="to_id_staff_member" Type="int" Nullable="false" />
+          <Property Name="message_content" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PurchaseList">
+          <Key>
+            <PropertyRef Name="id_purchase_list" />
+          </Key>
+          <Property Name="id_purchase_list" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="items_to_buy" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="price" Type="float" Nullable="false" />
+          <Property Name="purchase_list_status" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="RepairingDevices">
+          <Key>
+            <PropertyRef Name="id_reapairing_work" />
+          </Key>
+          <Property Name="id_reapairing_work" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_device" Type="int" Nullable="false" />
+          <Property Name="date_device_is_taken" Type="datetime" Nullable="false" />
+          <Property Name="break_info" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="type_of_repairing" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="repairing_time" Type="datetime" Nullable="false" />
+          <Property Name="id_staff_member" Type="int" Nullable="false" />
+          <Property Name="id_device_part_to_repair" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RepairingParts">
+          <Key>
+            <PropertyRef Name="id_repairing_device_part" />
+          </Key>
+          <Property Name="id_repairing_device_part" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name_device_part" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="amount_of_item" Type="int" Nullable="false" />
+          <Property Name="price_on_market" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Requests">
+          <Key>
+            <PropertyRef Name="id_repair_request" />
+          </Key>
+          <Property Name="id_repair_request" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="content_request" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="request_status" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="time_request" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Staff">
+          <Key>
+            <PropertyRef Name="id_staff_member" />
+          </Key>
+          <Property Name="id_staff_member" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name_staff_member" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="last_name_staff_member" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="time_hired" Type="date" Nullable="false" />
+          <Property Name="time_fired" Type="date" />
+          <Property Name="id_branch" Type="int" Nullable="false" />
+          <Property Name="id_staff_role" Type="int" Nullable="false" />
+          <Property Name="id_user" Type="int" />
+          <Property Name="email" Type="nvarchar" MaxLength="50" />
+          <Property Name="telephone" Type="nvarchar" MaxLength="50" />
+          <Property Name="profile_image_path" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="staff_moving_log">
+          <Key>
+            <PropertyRef Name="id_move" />
+          </Key>
+          <Property Name="id_move" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_staff_member" Type="int" Nullable="false" />
+          <Property Name="id_branch" Type="int" Nullable="false" />
+          <Property Name="time_branch_approach" Type="datetime" Nullable="false" />
+          <Property Name="time_branch_come_out" Type="datetime" />
+        </EntityType>
+        <EntityType Name="StaffRoles">
+          <Key>
+            <PropertyRef Name="id_staff_role" />
+          </Key>
+          <Property Name="id_staff_role" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name_staff_role" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="TransferDevice">
+          <Key>
+            <PropertyRef Name="id_transfer" />
+          </Key>
+          <Property Name="id_transfer" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_device" Type="int" Nullable="false" />
+          <Property Name="branch_name_removed" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="branch_name_moved" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="time_removed" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="id_user" />
+          </Key>
+          <Property Name="id_user" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="user_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="login" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="password" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Device_Branches">
+          <End Role="Branches" Type="Self.Branches" Multiplicity="1" />
+          <End Role="Device" Type="Self.Device" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Branches">
+              <PropertyRef Name="id_branch" />
+            </Principal>
+            <Dependent Role="Device">
+              <PropertyRef Name="id_branch" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Messages_Staff">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="1" />
+          <End Role="Messages" Type="Self.Messages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="id_staff_member" />
+            </Principal>
+            <Dependent Role="Messages">
+              <PropertyRef Name="from_id_staff_member" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Messages_Staff1">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="1" />
+          <End Role="Messages" Type="Self.Messages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="id_staff_member" />
+            </Principal>
+            <Dependent Role="Messages">
+              <PropertyRef Name="to_id_staff_member" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RepairingDevices_Device">
+          <End Role="Device" Type="Self.Device" Multiplicity="1" />
+          <End Role="RepairingDevices" Type="Self.RepairingDevices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Device">
+              <PropertyRef Name="id_device" />
+            </Principal>
+            <Dependent Role="RepairingDevices">
+              <PropertyRef Name="id_device" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RepairingDevices_RepairingParts">
+          <End Role="RepairingParts" Type="Self.RepairingParts" Multiplicity="1" />
+          <End Role="RepairingDevices" Type="Self.RepairingDevices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RepairingParts">
+              <PropertyRef Name="id_repairing_device_part" />
+            </Principal>
+            <Dependent Role="RepairingDevices">
+              <PropertyRef Name="id_device_part_to_repair" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RepairingDevices_Staff">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="1" />
+          <End Role="RepairingDevices" Type="Self.RepairingDevices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="id_staff_member" />
+            </Principal>
+            <Dependent Role="RepairingDevices">
+              <PropertyRef Name="id_staff_member" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Staff_Branches">
+          <End Role="Branches" Type="Self.Branches" Multiplicity="1" />
+          <End Role="Staff" Type="Self.Staff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Branches">
+              <PropertyRef Name="id_branch" />
+            </Principal>
+            <Dependent Role="Staff">
+              <PropertyRef Name="id_branch" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_staff_moving_log_Branches">
+          <End Role="Branches" Type="Self.Branches" Multiplicity="1" />
+          <End Role="staff_moving_log" Type="Self.staff_moving_log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Branches">
+              <PropertyRef Name="id_branch" />
+            </Principal>
+            <Dependent Role="staff_moving_log">
+              <PropertyRef Name="id_branch" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_staff_moving_log_Staff">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="1" />
+          <End Role="staff_moving_log" Type="Self.staff_moving_log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="id_staff_member" />
+            </Principal>
+            <Dependent Role="staff_moving_log">
+              <PropertyRef Name="id_staff_member" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Staff_StaffRoles">
+          <End Role="StaffRoles" Type="Self.StaffRoles" Multiplicity="1" />
+          <End Role="Staff" Type="Self.Staff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StaffRoles">
+              <PropertyRef Name="id_staff_role" />
+            </Principal>
+            <Dependent Role="Staff">
+              <PropertyRef Name="id_staff_role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Staff_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Staff" Type="Self.Staff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="id_user" />
+            </Principal>
+            <Dependent Role="Staff">
+              <PropertyRef Name="id_user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TransferDevice_Device">
+          <End Role="Device" Type="Self.Device" Multiplicity="1" />
+          <End Role="TransferDevice" Type="Self.TransferDevice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Device">
+              <PropertyRef Name="id_device" />
+            </Principal>
+            <Dependent Role="TransferDevice">
+              <PropertyRef Name="id_device" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="RepairServiceDevModelStoreContainer">
+          <EntitySet Name="Branches" EntityType="Self.Branches" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Device" EntityType="Self.Device" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Messages" EntityType="Self.Messages" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PurchaseList" EntityType="Self.PurchaseList" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RepairingDevices" EntityType="Self.RepairingDevices" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RepairingParts" EntityType="Self.RepairingParts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Requests" EntityType="Self.Requests" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Staff" EntityType="Self.Staff" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="staff_moving_log" EntityType="Self.staff_moving_log" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StaffRoles" EntityType="Self.StaffRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TransferDevice" EntityType="Self.TransferDevice" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Device_Branches" Association="Self.FK_Device_Branches">
+            <End Role="Branches" EntitySet="Branches" />
+            <End Role="Device" EntitySet="Device" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Messages_Staff" Association="Self.FK_Messages_Staff">
+            <End Role="Staff" EntitySet="Staff" />
+            <End Role="Messages" EntitySet="Messages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Messages_Staff1" Association="Self.FK_Messages_Staff1">
+            <End Role="Staff" EntitySet="Staff" />
+            <End Role="Messages" EntitySet="Messages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RepairingDevices_Device" Association="Self.FK_RepairingDevices_Device">
+            <End Role="Device" EntitySet="Device" />
+            <End Role="RepairingDevices" EntitySet="RepairingDevices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RepairingDevices_RepairingParts" Association="Self.FK_RepairingDevices_RepairingParts">
+            <End Role="RepairingParts" EntitySet="RepairingParts" />
+            <End Role="RepairingDevices" EntitySet="RepairingDevices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RepairingDevices_Staff" Association="Self.FK_RepairingDevices_Staff">
+            <End Role="Staff" EntitySet="Staff" />
+            <End Role="RepairingDevices" EntitySet="RepairingDevices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Staff_Branches" Association="Self.FK_Staff_Branches">
+            <End Role="Branches" EntitySet="Branches" />
+            <End Role="Staff" EntitySet="Staff" />
+          </AssociationSet>
+          <AssociationSet Name="FK_staff_moving_log_Branches" Association="Self.FK_staff_moving_log_Branches">
+            <End Role="Branches" EntitySet="Branches" />
+            <End Role="staff_moving_log" EntitySet="staff_moving_log" />
+          </AssociationSet>
+          <AssociationSet Name="FK_staff_moving_log_Staff" Association="Self.FK_staff_moving_log_Staff">
+            <End Role="Staff" EntitySet="Staff" />
+            <End Role="staff_moving_log" EntitySet="staff_moving_log" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Staff_StaffRoles" Association="Self.FK_Staff_StaffRoles">
+            <End Role="StaffRoles" EntitySet="StaffRoles" />
+            <End Role="Staff" EntitySet="Staff" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Staff_Users" Association="Self.FK_Staff_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Staff" EntitySet="Staff" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TransferDevice_Device" Association="Self.FK_TransferDevice_Device">
+            <End Role="Device" EntitySet="Device" />
+            <End Role="TransferDevice" EntitySet="TransferDevice" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="RepairServiceDevModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Branch">
+          <Key>
+            <PropertyRef Name="id_branch" />
+          </Key>
+          <Property Name="id_branch" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name_branch" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Devices" Relationship="Self.FK_Device_Branches" FromRole="Branches" ToRole="Device" />
+          <NavigationProperty Name="Staffs" Relationship="Self.FK_Staff_Branches" FromRole="Branches" ToRole="Staff" />
+          <NavigationProperty Name="staff_moving_log" Relationship="Self.FK_staff_moving_log_Branches" FromRole="Branches" ToRole="staff_moving_log" />
+        </EntityType>
+        <EntityType Name="Device">
+          <Key>
+            <PropertyRef Name="id_device" />
+          </Key>
+          <Property Name="id_device" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name_device" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="model_device" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="dateOfDevelopment" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="id_branch" Type="Int32" Nullable="false" />
+          <Property Name="time_branch_approach" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Branch" Relationship="Self.FK_Device_Branches" FromRole="Device" ToRole="Branches" />
+          <NavigationProperty Name="RepairingDevices" Relationship="Self.FK_RepairingDevices_Device" FromRole="Device" ToRole="RepairingDevices" />
+          <NavigationProperty Name="TransferDevices" Relationship="Self.FK_TransferDevice_Device" FromRole="Device" ToRole="TransferDevice" />
+        </EntityType>
+        <EntityType Name="Message">
+          <Key>
+            <PropertyRef Name="id_message" />
+          </Key>
+          <Property Name="id_message" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="from_id_staff_member" Type="Int32" Nullable="false" />
+          <Property Name="to_id_staff_member" Type="Int32" Nullable="false" />
+          <Property Name="message_content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Staff" Relationship="Self.FK_Messages_Staff" FromRole="Messages" ToRole="Staff" />
+          <NavigationProperty Name="Staff1" Relationship="Self.FK_Messages_Staff1" FromRole="Messages" ToRole="Staff" />
+        </EntityType>
+        <EntityType Name="PurchaseList">
+          <Key>
+            <PropertyRef Name="id_purchase_list" />
+          </Key>
+          <Property Name="id_purchase_list" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="items_to_buy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="price" Type="Double" Nullable="false" />
+          <Property Name="purchase_list_status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="RepairingDevice">
+          <Key>
+            <PropertyRef Name="id_reapairing_work" />
+          </Key>
+          <Property Name="id_reapairing_work" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_device" Type="Int32" Nullable="false" />
+          <Property Name="date_device_is_taken" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="break_info" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="type_of_repairing" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="repairing_time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="id_staff_member" Type="Int32" Nullable="false" />
+          <Property Name="id_device_part_to_repair" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Device" Relationship="Self.FK_RepairingDevices_Device" FromRole="RepairingDevices" ToRole="Device" />
+          <NavigationProperty Name="RepairingPart" Relationship="Self.FK_RepairingDevices_RepairingParts" FromRole="RepairingDevices" ToRole="RepairingParts" />
+          <NavigationProperty Name="Staff" Relationship="Self.FK_RepairingDevices_Staff" FromRole="RepairingDevices" ToRole="Staff" />
+        </EntityType>
+        <EntityType Name="RepairingPart">
+          <Key>
+            <PropertyRef Name="id_repairing_device_part" />
+          </Key>
+          <Property Name="id_repairing_device_part" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name_device_part" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="amount_of_item" Type="Int32" Nullable="false" />
+          <Property Name="price_on_market" Type="Double" Nullable="false" />
+          <NavigationProperty Name="RepairingDevices" Relationship="Self.FK_RepairingDevices_RepairingParts" FromRole="RepairingParts" ToRole="RepairingDevices" />
+        </EntityType>
+        <EntityType Name="Request">
+          <Key>
+            <PropertyRef Name="id_repair_request" />
+          </Key>
+          <Property Name="id_repair_request" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="content_request" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="request_status" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="time_request" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="Staff">
+          <Key>
+            <PropertyRef Name="id_staff_member" />
+          </Key>
+          <Property Name="id_staff_member" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name_staff_member" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="last_name_staff_member" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="time_hired" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="time_fired" Type="DateTime" Precision="0" />
+          <Property Name="id_branch" Type="Int32" Nullable="false" />
+          <Property Name="id_staff_role" Type="Int32" Nullable="false" />
+          <Property Name="id_user" Type="Int32" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="telephone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="profile_image_path" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Branch" Relationship="Self.FK_Staff_Branches" FromRole="Staff" ToRole="Branches" />
+          <NavigationProperty Name="Messages" Relationship="Self.FK_Messages_Staff" FromRole="Staff" ToRole="Messages" />
+          <NavigationProperty Name="Messages1" Relationship="Self.FK_Messages_Staff1" FromRole="Staff" ToRole="Messages" />
+          <NavigationProperty Name="RepairingDevices" Relationship="Self.FK_RepairingDevices_Staff" FromRole="Staff" ToRole="RepairingDevices" />
+          <NavigationProperty Name="staff_moving_log" Relationship="Self.FK_staff_moving_log_Staff" FromRole="Staff" ToRole="staff_moving_log" />
+          <NavigationProperty Name="StaffRole" Relationship="Self.FK_Staff_StaffRoles" FromRole="Staff" ToRole="StaffRoles" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Staff_Users" FromRole="Staff" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="staff_moving_log">
+          <Key>
+            <PropertyRef Name="id_move" />
+          </Key>
+          <Property Name="id_move" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_staff_member" Type="Int32" Nullable="false" />
+          <Property Name="id_branch" Type="Int32" Nullable="false" />
+          <Property Name="time_branch_approach" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="time_branch_come_out" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Branch" Relationship="Self.FK_staff_moving_log_Branches" FromRole="staff_moving_log" ToRole="Branches" />
+          <NavigationProperty Name="Staff" Relationship="Self.FK_staff_moving_log_Staff" FromRole="staff_moving_log" ToRole="Staff" />
+        </EntityType>
+        <EntityType Name="StaffRole">
+          <Key>
+            <PropertyRef Name="id_staff_role" />
+          </Key>
+          <Property Name="id_staff_role" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name_staff_role" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Staffs" Relationship="Self.FK_Staff_StaffRoles" FromRole="StaffRoles" ToRole="Staff" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="TransferDevice">
+          <Key>
+            <PropertyRef Name="id_transfer" />
+          </Key>
+          <Property Name="id_transfer" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_device" Type="Int32" Nullable="false" />
+          <Property Name="branch_name_removed" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="branch_name_moved" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="time_removed" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Device" Relationship="Self.FK_TransferDevice_Device" FromRole="TransferDevice" ToRole="Device" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="id_user" />
+          </Key>
+          <Property Name="id_user" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="user_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Staffs" Relationship="Self.FK_Staff_Users" FromRole="Users" ToRole="Staff" />
+        </EntityType>
+        <Association Name="FK_Device_Branches">
+          <End Role="Branches" Type="Self.Branch" Multiplicity="1" />
+          <End Role="Device" Type="Self.Device" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Branches">
+              <PropertyRef Name="id_branch" />
+            </Principal>
+            <Dependent Role="Device">
+              <PropertyRef Name="id_branch" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Staff_Branches">
+          <End Role="Branches" Type="Self.Branch" Multiplicity="1" />
+          <End Role="Staff" Type="Self.Staff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Branches">
+              <PropertyRef Name="id_branch" />
+            </Principal>
+            <Dependent Role="Staff">
+              <PropertyRef Name="id_branch" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_staff_moving_log_Branches">
+          <End Role="Branches" Type="Self.Branch" Multiplicity="1" />
+          <End Role="staff_moving_log" Type="Self.staff_moving_log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Branches">
+              <PropertyRef Name="id_branch" />
+            </Principal>
+            <Dependent Role="staff_moving_log">
+              <PropertyRef Name="id_branch" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RepairingDevices_Device">
+          <End Role="Device" Type="Self.Device" Multiplicity="1" />
+          <End Role="RepairingDevices" Type="Self.RepairingDevice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Device">
+              <PropertyRef Name="id_device" />
+            </Principal>
+            <Dependent Role="RepairingDevices">
+              <PropertyRef Name="id_device" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TransferDevice_Device">
+          <End Role="Device" Type="Self.Device" Multiplicity="1" />
+          <End Role="TransferDevice" Type="Self.TransferDevice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Device">
+              <PropertyRef Name="id_device" />
+            </Principal>
+            <Dependent Role="TransferDevice">
+              <PropertyRef Name="id_device" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Messages_Staff">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="1" />
+          <End Role="Messages" Type="Self.Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="id_staff_member" />
+            </Principal>
+            <Dependent Role="Messages">
+              <PropertyRef Name="from_id_staff_member" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Messages_Staff1">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="1" />
+          <End Role="Messages" Type="Self.Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="id_staff_member" />
+            </Principal>
+            <Dependent Role="Messages">
+              <PropertyRef Name="to_id_staff_member" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RepairingDevices_RepairingParts">
+          <End Role="RepairingParts" Type="Self.RepairingPart" Multiplicity="1" />
+          <End Role="RepairingDevices" Type="Self.RepairingDevice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RepairingParts">
+              <PropertyRef Name="id_repairing_device_part" />
+            </Principal>
+            <Dependent Role="RepairingDevices">
+              <PropertyRef Name="id_device_part_to_repair" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RepairingDevices_Staff">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="1" />
+          <End Role="RepairingDevices" Type="Self.RepairingDevice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="id_staff_member" />
+            </Principal>
+            <Dependent Role="RepairingDevices">
+              <PropertyRef Name="id_staff_member" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_staff_moving_log_Staff">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="1" />
+          <End Role="staff_moving_log" Type="Self.staff_moving_log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="id_staff_member" />
+            </Principal>
+            <Dependent Role="staff_moving_log">
+              <PropertyRef Name="id_staff_member" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Staff_StaffRoles">
+          <End Role="StaffRoles" Type="Self.StaffRole" Multiplicity="1" />
+          <End Role="Staff" Type="Self.Staff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StaffRoles">
+              <PropertyRef Name="id_staff_role" />
+            </Principal>
+            <Dependent Role="Staff">
+              <PropertyRef Name="id_staff_role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Staff_Users">
+          <End Role="Users" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Staff" Type="Self.Staff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="id_user" />
+            </Principal>
+            <Dependent Role="Staff">
+              <PropertyRef Name="id_user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="RepairServiceDevEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Branches" EntityType="Self.Branch" />
+          <EntitySet Name="Devices" EntityType="Self.Device" />
+          <EntitySet Name="Messages" EntityType="Self.Message" />
+          <EntitySet Name="PurchaseLists" EntityType="Self.PurchaseList" />
+          <EntitySet Name="RepairingDevices" EntityType="Self.RepairingDevice" />
+          <EntitySet Name="RepairingParts" EntityType="Self.RepairingPart" />
+          <EntitySet Name="Requests" EntityType="Self.Request" />
+          <EntitySet Name="Staffs" EntityType="Self.Staff" />
+          <EntitySet Name="staff_moving_log" EntityType="Self.staff_moving_log" />
+          <EntitySet Name="StaffRoles" EntityType="Self.StaffRole" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="TransferDevices" EntityType="Self.TransferDevice" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <AssociationSet Name="FK_Device_Branches" Association="Self.FK_Device_Branches">
+            <End Role="Branches" EntitySet="Branches" />
+            <End Role="Device" EntitySet="Devices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Staff_Branches" Association="Self.FK_Staff_Branches">
+            <End Role="Branches" EntitySet="Branches" />
+            <End Role="Staff" EntitySet="Staffs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_staff_moving_log_Branches" Association="Self.FK_staff_moving_log_Branches">
+            <End Role="Branches" EntitySet="Branches" />
+            <End Role="staff_moving_log" EntitySet="staff_moving_log" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RepairingDevices_Device" Association="Self.FK_RepairingDevices_Device">
+            <End Role="Device" EntitySet="Devices" />
+            <End Role="RepairingDevices" EntitySet="RepairingDevices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TransferDevice_Device" Association="Self.FK_TransferDevice_Device">
+            <End Role="Device" EntitySet="Devices" />
+            <End Role="TransferDevice" EntitySet="TransferDevices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Messages_Staff" Association="Self.FK_Messages_Staff">
+            <End Role="Staff" EntitySet="Staffs" />
+            <End Role="Messages" EntitySet="Messages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Messages_Staff1" Association="Self.FK_Messages_Staff1">
+            <End Role="Staff" EntitySet="Staffs" />
+            <End Role="Messages" EntitySet="Messages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RepairingDevices_RepairingParts" Association="Self.FK_RepairingDevices_RepairingParts">
+            <End Role="RepairingParts" EntitySet="RepairingParts" />
+            <End Role="RepairingDevices" EntitySet="RepairingDevices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RepairingDevices_Staff" Association="Self.FK_RepairingDevices_Staff">
+            <End Role="Staff" EntitySet="Staffs" />
+            <End Role="RepairingDevices" EntitySet="RepairingDevices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_staff_moving_log_Staff" Association="Self.FK_staff_moving_log_Staff">
+            <End Role="Staff" EntitySet="Staffs" />
+            <End Role="staff_moving_log" EntitySet="staff_moving_log" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Staff_StaffRoles" Association="Self.FK_Staff_StaffRoles">
+            <End Role="StaffRoles" EntitySet="StaffRoles" />
+            <End Role="Staff" EntitySet="Staffs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Staff_Users" Association="Self.FK_Staff_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Staff" EntitySet="Staffs" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="RepairServiceDevModelStoreContainer" CdmEntityContainer="RepairServiceDevEntities">
+          <EntitySetMapping Name="Branches">
+            <EntityTypeMapping TypeName="RepairServiceDevModel.Branch">
+              <MappingFragment StoreEntitySet="Branches">
+                <ScalarProperty Name="id_branch" ColumnName="id_branch" />
+                <ScalarProperty Name="name_branch" ColumnName="name_branch" />
+                <ScalarProperty Name="address" ColumnName="address" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Devices">
+            <EntityTypeMapping TypeName="RepairServiceDevModel.Device">
+              <MappingFragment StoreEntitySet="Device">
+                <ScalarProperty Name="id_device" ColumnName="id_device" />
+                <ScalarProperty Name="name_device" ColumnName="name_device" />
+                <ScalarProperty Name="model_device" ColumnName="model_device" />
+                <ScalarProperty Name="dateOfDevelopment" ColumnName="dateOfDevelopment" />
+                <ScalarProperty Name="id_branch" ColumnName="id_branch" />
+                <ScalarProperty Name="time_branch_approach" ColumnName="time_branch_approach" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Messages">
+            <EntityTypeMapping TypeName="RepairServiceDevModel.Message">
+              <MappingFragment StoreEntitySet="Messages">
+                <ScalarProperty Name="id_message" ColumnName="id_message" />
+                <ScalarProperty Name="from_id_staff_member" ColumnName="from_id_staff_member" />
+                <ScalarProperty Name="to_id_staff_member" ColumnName="to_id_staff_member" />
+                <ScalarProperty Name="message_content" ColumnName="message_content" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PurchaseLists">
+            <EntityTypeMapping TypeName="RepairServiceDevModel.PurchaseList">
+              <MappingFragment StoreEntitySet="PurchaseList">
+                <ScalarProperty Name="id_purchase_list" ColumnName="id_purchase_list" />
+                <ScalarProperty Name="items_to_buy" ColumnName="items_to_buy" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="purchase_list_status" ColumnName="purchase_list_status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RepairingDevices">
+            <EntityTypeMapping TypeName="RepairServiceDevModel.RepairingDevice">
+              <MappingFragment StoreEntitySet="RepairingDevices">
+                <ScalarProperty Name="id_reapairing_work" ColumnName="id_reapairing_work" />
+                <ScalarProperty Name="id_device" ColumnName="id_device" />
+                <ScalarProperty Name="date_device_is_taken" ColumnName="date_device_is_taken" />
+                <ScalarProperty Name="break_info" ColumnName="break_info" />
+                <ScalarProperty Name="type_of_repairing" ColumnName="type_of_repairing" />
+                <ScalarProperty Name="repairing_time" ColumnName="repairing_time" />
+                <ScalarProperty Name="id_staff_member" ColumnName="id_staff_member" />
+                <ScalarProperty Name="id_device_part_to_repair" ColumnName="id_device_part_to_repair" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RepairingParts">
+            <EntityTypeMapping TypeName="RepairServiceDevModel.RepairingPart">
+              <MappingFragment StoreEntitySet="RepairingParts">
+                <ScalarProperty Name="id_repairing_device_part" ColumnName="id_repairing_device_part" />
+                <ScalarProperty Name="name_device_part" ColumnName="name_device_part" />
+                <ScalarProperty Name="amount_of_item" ColumnName="amount_of_item" />
+                <ScalarProperty Name="price_on_market" ColumnName="price_on_market" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Requests">
+            <EntityTypeMapping TypeName="RepairServiceDevModel.Request">
+              <MappingFragment StoreEntitySet="Requests">
+                <ScalarProperty Name="id_repair_request" ColumnName="id_repair_request" />
+                <ScalarProperty Name="content_request" ColumnName="content_request" />
+                <ScalarProperty Name="request_status" ColumnName="request_status" />
+                <ScalarProperty Name="time_request" ColumnName="time_request" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Staffs">
+            <EntityTypeMapping TypeName="RepairServiceDevModel.Staff">
+              <MappingFragment StoreEntitySet="Staff">
+                <ScalarProperty Name="id_staff_member" ColumnName="id_staff_member" />
+                <ScalarProperty Name="name_staff_member" ColumnName="name_staff_member" />
+                <ScalarProperty Name="last_name_staff_member" ColumnName="last_name_staff_member" />
+                <ScalarProperty Name="time_hired" ColumnName="time_hired" />
+                <ScalarProperty Name="time_fired" ColumnName="time_fired" />
+                <ScalarProperty Name="id_branch" ColumnName="id_branch" />
+                <ScalarProperty Name="id_staff_role" ColumnName="id_staff_role" />
+                <ScalarProperty Name="id_user" ColumnName="id_user" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="telephone" ColumnName="telephone" />
+                <ScalarProperty Name="profile_image_path" ColumnName="profile_image_path" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="staff_moving_log">
+            <EntityTypeMapping TypeName="RepairServiceDevModel.staff_moving_log">
+              <MappingFragment StoreEntitySet="staff_moving_log">
+                <ScalarProperty Name="id_move" ColumnName="id_move" />
+                <ScalarProperty Name="id_staff_member" ColumnName="id_staff_member" />
+                <ScalarProperty Name="id_branch" ColumnName="id_branch" />
+                <ScalarProperty Name="time_branch_approach" ColumnName="time_branch_approach" />
+                <ScalarProperty Name="time_branch_come_out" ColumnName="time_branch_come_out" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StaffRoles">
+            <EntityTypeMapping TypeName="RepairServiceDevModel.StaffRole">
+              <MappingFragment StoreEntitySet="StaffRoles">
+                <ScalarProperty Name="id_staff_role" ColumnName="id_staff_role" />
+                <ScalarProperty Name="name_staff_role" ColumnName="name_staff_role" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="RepairServiceDevModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TransferDevices">
+            <EntityTypeMapping TypeName="RepairServiceDevModel.TransferDevice">
+              <MappingFragment StoreEntitySet="TransferDevice">
+                <ScalarProperty Name="id_transfer" ColumnName="id_transfer" />
+                <ScalarProperty Name="id_device" ColumnName="id_device" />
+                <ScalarProperty Name="branch_name_removed" ColumnName="branch_name_removed" />
+                <ScalarProperty Name="branch_name_moved" ColumnName="branch_name_moved" />
+                <ScalarProperty Name="time_removed" ColumnName="time_removed" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="RepairServiceDevModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="id_user" ColumnName="id_user" />
+                <ScalarProperty Name="user_name" ColumnName="user_name" />
+                <ScalarProperty Name="login" ColumnName="login" />
+                <ScalarProperty Name="password" ColumnName="password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,276 @@
+﻿<Page x:Class="Remonter.UserPages.Manager.ManagerPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Remonter.UserPages.Manager"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="ManagerPage">
+    <Grid Height="600" Width="800">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="506"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="160"/>
+            <ColumnDefinition Width="*"/>
+
+        </Grid.ColumnDefinitions>
+        <Button x:Name="close_button" Grid.Column="1" Grid.Row="0" Width="30" HorizontalAlignment="Left" Content="X"  FontSize="12" Click ="Btn_Close_windows" Margin="610,0,0,0" />
+        <StackPanel x:Name="Navigation_bar" VerticalAlignment="Center" Grid.Row="2">
+            <Button Content ="Cообщения" Width="150" Height="25" Margin="5, 10, 5, 10" Click="messageBtn_click"/>
+            <Button Content ="Прайс листы" Width="150" Height="25" Margin="5, 10, 5, 10" Click="showPriceLists"/>
+            <Button Content ="Сотрудники" Width="150" Height="25" Margin="5, 10, 5, 10" Click="showStaffList"/>
+            <Button Content ="Перемещение" Width="150" Height="25" Margin="5, 10, 5, 10" Click="Btn_show_move_log"/>
+        </StackPanel>
+        <StackPanel x:Name= "name_edit_staffmember_panel" Grid.Column="1" HorizontalAlignment="Center" Orientation="Horizontal" Grid.Row="3" Visibility="Hidden" Width="480" >
+            <Button Content ="Уволить сотрудника" Width="150" Height="25" Margin="5, 10, 5, 10" Click ="Btn_fire_Click" />
+            <Button Content ="Редактировать" Width="150" Height="25" Margin="5, 10, 5, 10" Click=" Btn_show_edit_panel"/>
+            <Button Content ="Добавить" Width="150" Height="25" Margin="5, 10, 5, 10" Click="Btn_add_new_staff_member"/>
+        </StackPanel>
+
+        <StackPanel x:Name="Staff_filters" Grid.Row="1" Grid.Column="1" Orientation="Horizontal" Visibility="Hidden">
+            <Label Content="Поиск по ID сотрудника:"/>
+            <TextBox x:Name="TextSearch" Width="100" Text="" TextChanged="FindStaffMember" />
+            <Label Content="Фильтрация по дате работы:" />
+            <ComboBox x:Name="ComboFilter" Width="200" SelectionChanged="ComboBoxFilterChanged" >
+                <TextBlock>По возрастанию</TextBlock>
+                <TextBlock>По убыванию</TextBlock>
+            </ComboBox>
+
+        </StackPanel>
+        <ListView x:Name ="list_of_messages" Visibility ="Hidden" Grid.Column="1" Grid.Row="2" >
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+
+                        <StackPanel Width="auto" Orientation="Vertical" HorizontalAlignment="Left">
+                            <TextBlock Width="auto" TextWrapping="Wrap" Height="auto">
+                                <Run Text="От кого(ID сотрудника):"/>
+                                <Run Text="{Binding from_id_staff_member}" />
+                            </TextBlock>
+                            <TextBlock Width="auto" TextWrapping="NoWrap" Height="auto">
+                                <Run Text="Сообщение:"/>
+                                <Run Text="{Binding message_content}" />
+                            </TextBlock>
+
+                        </StackPanel>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+
+        </ListView>
+
+        <Button Grid.Column="1" Grid.Row="3" x:Name="Btn_write_message" Content="Написать сообщение" Visibility="Hidden" HorizontalAlignment="Center" Click="writeMessageBtn_click"/>
+        <ListView x:Name ="list_of_staff_to_message" Visibility ="Hidden" Grid.Column="1" Grid.Row="2" >
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="200"/>
+                            <ColumnDefinition Width="200"/>
+                            <ColumnDefinition Width="200"/>
+
+                        </Grid.ColumnDefinitions>
+                        <Image Source="{Binding profile_photo}"/>
+                        <StackPanel Grid.Column="1" Width="auto" Orientation="Vertical" HorizontalAlignment="Left">
+                            <TextBlock Width="auto" TextWrapping="Wrap" Height="auto">
+                                <Run Text="Фамилия:"/>
+                                <Run Text="{Binding last_name_staff_member}" />
+                            </TextBlock>
+                            <TextBlock Width="auto" TextWrapping="Wrap" Height="auto">
+                                <Run Text="Имя:"/>
+                                <Run Text="{Binding name_staff_member}" />
+                            </TextBlock>
+                            <TextBlock Width="auto" TextWrapping="Wrap" Height="auto">
+                                <Run Text="ID сотрудника"/>
+                                <Run Text="{Binding id_staff_member}" />
+                            </TextBlock>
+                            <Button x:Name="write_messageBtn_toUser" Content="Написать сообщение" />
+                        </StackPanel>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+
+        </ListView>
+        <StackPanel x:Name="Message_Send" Grid.Row="2" Grid.Column="2"  Visibility="Hidden" Width="300">
+            <TextBlock Text="От кого:" Height="30"/>
+            <TextBox  Text ="{Binding from_id_staff_member}" Margin="0,0,0,10" IsReadOnly="True"/>
+            
+            <TextBlock Text="Получатель:" Height="30"/>
+            <TextBox  Text ="{Binding to_id_staff_member}" Margin="0,0,0,10"/>
+            
+            <TextBlock Text="Содержание сообщения:" Height="30"/>
+            <TextBox  Text ="{Binding message_content}" Margin="0,0,0,10"/>
+            <Button Height=" 30" Content="Отправить сообщение" Width="150" Click ="Send_Message"/>
+        </StackPanel>
+        
+        <ListView x:Name ="list_of_staffMembers" Visibility ="Hidden" Grid.Column="1" Grid.Row="2">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="200"/>
+
+                            <ColumnDefinition Width="*"/>
+
+                        </Grid.ColumnDefinitions>
+                        <Image Source="{Binding profile_photo}"  Grid.Column="0"/>
+                        <StackPanel Width="auto" Orientation="Vertical" HorizontalAlignment="Left" Grid.Column="1" Margin="50, 0, 0, 0">
+                            <TextBlock Width="auto" TextWrapping="Wrap" Height="auto">
+                                <Run Text="ID сотрудника:" FontSize="16"/>
+                                <Run Text="{Binding id_staff_member}" FontSize="16"/>
+                            </TextBlock>
+                            <TextBlock Width="auto" TextWrapping="NoWrap" Height="auto">
+                                <Run Text="Имя:" FontSize="16"/>
+                                <Run Text="{Binding name_staff_member}" FontSize="16" />
+                            </TextBlock>
+                            <TextBlock Width="auto" TextWrapping="NoWrap" Height="auto">
+                                <Run Text="Фамилия:" FontSize="16" />
+                                <Run Text="{Binding last_name_staff_member}" FontSize="16"/>
+                            </TextBlock>
+                            <TextBlock Width="auto" TextWrapping="NoWrap" Height="auto" FontSize="16">
+                                <Run Text="Время нанятия:"/>
+                                <Run Text="{Binding time_hired}" />
+                            </TextBlock>
+                            <TextBlock Width="auto" TextWrapping="NoWrap" Height="auto" FontSize="16">
+                                <Run Text="Время уволнения:"/>
+                                <Run Text="{Binding time_fired}" />
+                            </TextBlock>
+                            <TextBlock Width="auto" TextWrapping="NoWrap" Height="auto" FontSize="16">
+                                <Run Text="ID филлиала:"/>
+                                <Run Text="{Binding id_branch}" />
+                            </TextBlock>
+                            <TextBlock Width="auto" TextWrapping="NoWrap" Height="auto" FontSize="16">
+                                <Run Text="ID роли в системе:"/>
+                                <Run Text="{Binding id_staff_role}" />
+                            </TextBlock>
+                            <TextBlock Width="auto" TextWrapping="NoWrap" Height="auto" FontSize="16">
+                                <Run Text="ID пользователя:"/>
+                                <Run Text="{Binding id_user}" />
+                            </TextBlock>
+                            <TextBlock Width="auto" TextWrapping="NoWrap" Height="auto" FontSize="16">
+                                <Run Text="почта"/>
+                                <Run Text="{Binding email}" />
+                            </TextBlock>
+                            <TextBlock Width="auto" TextWrapping="NoWrap" Height="auto" FontSize="16">
+                                <Run Text="телефон:"/>
+                                <Run Text="{Binding telephone}" />
+                            </TextBlock>
+
+                        </StackPanel>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+
+        </ListView>
+        <StackPanel x:Name="Edit_StaffMember_Panel" Visibility="Hidden"  HorizontalAlignment="Center" Grid.Column="1"   Grid.Row="1" Grid.RowSpan="2" Width="270">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <StackPanel x:Name="Staff_data"  Grid.Row="0" Width="200">
+                    <TextBlock Text="Имя:" Height="30"/>
+                    <TextBox Text ="{Binding name_staff_member}"   Margin="0,0,0,10"/>
+
+                    <TextBlock Text="Фамилия" Height="30"/>
+                    <TextBox  Text ="{Binding last_name_staff_member}" Margin="0,0,0,10"/>
+
+                    <TextBlock Text="ID филлиала" Height="30"/>
+                    <TextBox  Text ="{Binding id_branch}" Margin="0,0,0,10"/>
+
+                    <TextBlock Text="ID роли в системе" Height="30"/>
+                    <TextBox  Text ="{Binding id_staff_role}" Margin="0,0,0,10" />
+
+                    <TextBlock Text="ID филлиала" Height="30"/>
+                    <TextBox  Text ="{Binding id_branch}" Margin="0,0,0,10"/>
+
+                    <TextBlock Text="ID пользователя" Height="30"/>
+                    <TextBox  Text ="{Binding id_user}" Margin="0,0,0,10"/>
+
+                    <TextBlock Text="Почта" Height="30"/>
+                    <TextBox  Text ="{Binding email}" Margin="0,0,0,10"/>
+
+                    <TextBlock Text="Телефон" Height="30"/>
+                    <TextBox  Text ="{Binding telephone}" Margin="0,0,0,10"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="1" >
+                    <Button x:Name="save_data_button" Content="Сохранить" Width="80" Click = "Btn_save_staff" />
+                    <Button x:Name="BtnConfirm_add_staff_member" Content="Добавить сотрудника" Width="160" Margin="30,0,0,0" IsEnabled="False" Click="Btn_add_new_staff_member_confirm"/>
+                </StackPanel>
+            </Grid>
+
+        </StackPanel>
+        <ListView x:Name ="list_of_moving_log" Visibility ="Hidden" Grid.Column="1" Grid.Row="2">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+
+                        <StackPanel Width="auto" Orientation="Vertical" HorizontalAlignment="Left">
+                            <TextBlock Width="auto" TextWrapping="Wrap" Height="auto" Margin="0,20,0,0">
+                                <Run Text="ID сотрудника:"/>
+                                <Run Text="{Binding id_staff_member}" />
+                            </TextBlock>
+                            <TextBlock Width="auto" TextWrapping="NoWrap" Height="auto">
+                                <Run Text="Филлиал" />
+                                <Run Text="{Binding id_branch}" />
+                            </TextBlock>
+                            <TextBlock Width="auto" TextWrapping="NoWrap" Height="auto">
+                                <Run Text="Время перехода в филлиал" />
+                                <Run Text="{Binding time_branch_approach}" />
+                            </TextBlock>
+                            <TextBlock Width="auto" TextWrapping="NoWrap" Height="auto">
+                                <Run Text="Время перехода из филлиала" />
+                                <Run Text="{Binding time_branch_come_out}" />
+                            </TextBlock>
+
+                        </StackPanel>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+
+        </ListView>
+        <ListView x:Name ="list_of_price_lists" Visibility ="Hidden" Grid.Column="1" Grid.Row="2">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <StackPanel Width="auto" Orientation="Vertical" HorizontalAlignment="Left">
+                            <TextBlock Width="auto" TextWrapping="Wrap" Height="auto" Margin="0,20,0,0">
+                                <Run Text="ID прайс листа:"/>
+                                <Run Text="{Binding id_purchase_list}" />
+                            </TextBlock>
+                            <TextBlock Width="auto" TextWrapping="NoWrap" Height="auto">
+                                <Run Text="Список товар для покупки" />
+                                <Run Text="{Binding items_to_buy}" />
+                            </TextBlock>
+                            <TextBlock Width="auto" TextWrapping="NoWrap" Height="auto">
+                                <Run Text="Цена прайс листа:" />
+                                <Run Text="{Binding price}" />
+                            </TextBlock>
+                            <TextBlock Width="auto" TextWrapping="NoWrap" Height="auto">
+                                <Run Text="Статус листа:" />
+                                <Run Text="{Binding purchase_list_status}" />
+                            </TextBlock>
+
+                        </StackPanel>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+
+        </ListView>
+        <StackPanel x:Name="Edit_Price_list_panel" Grid.Column="1" Grid.Row="3" Visibility="Hidden" Orientation="Horizontal" HorizontalAlignment="Center" >
+            <Button  Content="Сформировать pdf" Width="160" Click="createPdf" />
+            <Button  Content="Изменить статус" Width="160" Margin="50,0,0,0" Click="Show_Change_button"/>
+        </StackPanel>
+        <StackPanel x:Name ="ChangePriceStatus_bar" Grid.Column ="2" Grid.Row ="2" Orientation="Vertical" VerticalAlignment="Center" Visibility="Hidden">
+            <TextBox Text="{Binding purchase_list_status}" Width="250" Height="40" ></TextBox>
+            <Button x:Name="Save_button" Width="100" Margin =" 0, 20,0,0" Content="Сохранить" Height="30" Click="Btn_changeStatusPriceList"/>
+        </StackPanel>
+
+    </Grid>
+</Page>

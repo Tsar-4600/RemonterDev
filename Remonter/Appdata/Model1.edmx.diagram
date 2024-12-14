@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="962ee31cf6d74256bdc5b952bff82934" Name="Diagram1">
+        <EntityTypeShape EntityType="RepairServiceDevModel.Branch" Width="1.5" PointX="0.75" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="RepairServiceDevModel.Device" Width="1.5" PointX="3" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="RepairServiceDevModel.Message" Width="1.5" PointX="5.25" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="RepairServiceDevModel.PurchaseList" Width="1.5" PointX="7.75" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="RepairServiceDevModel.RepairingDevice" Width="1.5" PointX="5.25" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="RepairServiceDevModel.RepairingPart" Width="1.5" PointX="3" PointY="11" IsExpanded="true" />
+        <EntityTypeShape EntityType="RepairServiceDevModel.Request" Width="1.5" PointX="9.75" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="RepairServiceDevModel.Staff" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RepairServiceDevModel.staff_moving_log" Width="1.5" PointX="8.25" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RepairServiceDevModel.StaffRole" Width="1.5" PointX="0.75" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="RepairServiceDevModel.sysdiagram" Width="1.5" PointX="7.75" PointY="10.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="RepairServiceDevModel.TransferDevice" Width="1.5" PointX="5.25" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RepairServiceDevModel.User" Width="1.5" PointX="0.75" PointY="10.625" IsExpanded="true" />
+        <AssociationConnector Association="RepairServiceDevModel.FK_Device_Branches" ManuallyRouted="false" />
+        <AssociationConnector Association="RepairServiceDevModel.FK_Staff_Branches" ManuallyRouted="false" />
+        <AssociationConnector Association="RepairServiceDevModel.FK_staff_moving_log_Branches" ManuallyRouted="false" />
+        <AssociationConnector Association="RepairServiceDevModel.FK_RepairingDevices_Device" ManuallyRouted="false" />
+        <AssociationConnector Association="RepairServiceDevModel.FK_TransferDevice_Device" ManuallyRouted="false" />
+        <AssociationConnector Association="RepairServiceDevModel.FK_Messages_Staff" ManuallyRouted="false" />
+        <AssociationConnector Association="RepairServiceDevModel.FK_Messages_Staff1" ManuallyRouted="false" />
+        <AssociationConnector Association="RepairServiceDevModel.FK_RepairingDevices_RepairingParts" ManuallyRouted="false" />
+        <AssociationConnector Association="RepairServiceDevModel.FK_RepairingDevices_Staff" ManuallyRouted="false" />
+        <AssociationConnector Association="RepairServiceDevModel.FK_staff_moving_log_Staff" ManuallyRouted="false" />
+        <AssociationConnector Association="RepairServiceDevModel.FK_Staff_StaffRoles" ManuallyRouted="false" />
+        <AssociationConnector Association="RepairServiceDevModel.FK_Staff_Users" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

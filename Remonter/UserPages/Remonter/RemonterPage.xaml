@@ -1,0 +1,266 @@
+﻿<Page x:Class="Remonter.UserPages.Remonter.RemonterPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Remonter.UserPages.Remonter"
+      mc:Ignorable="d" 
+      d:DesignHeight="600" d:DesignWidth="800"
+      Title="RemonterPage">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+
+            <RowDefinition Height="400"/>
+            <RowDefinition Height="137"/>
+            <RowDefinition Height="0*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="225"/>
+            <ColumnDefinition/>
+
+        </Grid.ColumnDefinitions>
+        <StackPanel x:Name="Navigation_bar" VerticalAlignment="Top" Grid.Row="1"  Margin="2,26,3,0">
+            <Button Content ="Сообщения" Width="200" Height="25" Margin="5, 10, 5, 10" Click="messageBtn_click"/>
+            <Button Content ="Прайс листы" Width="200" Height="25" Margin="5, 10, 5, 10" Click="showPriceLists" />
+            <Button Content ="Оборудование" Width="200" Height="25" Margin="5, 10, 5, 10" Click="Btn_show_devices"/>
+            <Button Content ="Перемещение оборудования" Width="209" Height="25" Margin="5, 10, 5, 10" Click="Btn_show_device_rotation_log"/>
+            <Button Content ="Введение ремонта" Width="200" Height="25" Margin="5, 10, 5, 10"  />
+            <Button Content ="Запросы на ремонт" Width="200" Height="25" Margin="5, 10, 5, 10" Click="Btn_show_requests"/>
+        </StackPanel>
+
+        <Button x:Name="close_button" Grid.Column="1" Grid.Row="0" Width="30" Height="20" VerticalAlignment="Bottom" HorizontalAlignment="Right" Content="X"  FontSize="12" Click ="Btn_Close_windows"  />
+        <ListView x:Name ="list_of_messages" Visibility ="Hidden" Grid.Column="1" Grid.Row="1" >
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+
+                        <StackPanel Width="auto" Orientation="Vertical" HorizontalAlignment="Left">
+                            <TextBlock Width="auto" TextWrapping="Wrap" Height="auto">
+                                <Run Text="От кого(ID сотрудника):"/>
+                                <Run Text="{Binding from_id_staff_member}" />
+                            </TextBlock>
+                            <TextBlock Width="auto" TextWrapping="NoWrap" Height="auto">
+                                <Run Text="Сообщение:"/>
+                                <Run Text="{Binding message_content}" />
+                            </TextBlock>
+
+                        </StackPanel>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+
+        </ListView>
+        <Button Grid.Column="1" Grid.Row="2" x:Name="Btn_write_message" Content="Написать сообщение" Visibility="Hidden" HorizontalAlignment="Center" Height="30" Width="121" Click="writeMessageBtn_click" />
+        <ListView x:Name ="list_of_devices" Visibility ="Hidden" Grid.Column="1" Grid.Row="1">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <StackPanel Width="auto" Orientation="Vertical" HorizontalAlignment="Left" Grid.Column="1" Margin="50, 0, 0, 0">
+                            <TextBlock Width="auto" TextWrapping="Wrap" Height="auto">
+                                <Run Text="ID оборудования" FontSize="16"/>
+                                <Run Text="{Binding id_device}" FontSize="16"/>
+                            </TextBlock>
+                            <TextBlock Width="auto" TextWrapping="NoWrap" Height="auto">
+                                <Run Text="Название девайса" FontSize="16"/>
+                                <Run Text="{Binding name_device}" FontSize="16" />
+                            </TextBlock>
+                            <TextBlock Width="auto" TextWrapping="NoWrap" Height="auto">
+                                <Run Text="Модель" FontSize="16" />
+                                <Run Text="{Binding model_device}" FontSize="16"/>
+                            </TextBlock>
+                            <TextBlock Width="auto" TextWrapping="NoWrap" Height="auto" FontSize="16">
+                                <Run Text="Дата выпсука:"/>
+                                <Run Text="{Binding dateOfDevelopment}" />
+                            </TextBlock>
+                            <TextBlock Width="auto" TextWrapping="NoWrap" Height="auto" FontSize="16">
+                                <Run Text="Филлиал:"/>
+                                <Run Text="{Binding id_branch}" />
+                            </TextBlock>
+                            <TextBlock Width="auto" TextWrapping="NoWrap" Height="auto" FontSize="16">
+                                <Run Text="Время прибытия в филлиал"/>
+                                <Run Text="{Binding time_branch_approach}" />
+                            </TextBlock>
+
+                        </StackPanel>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+
+        </ListView>
+        <StackPanel x:Name="Edit_device_list" Orientation="Horizontal" HorizontalAlignment="Center" Visibility="Hidden" Grid.Row="2" Grid.Column="1" Margin="0,0,0,78" >
+            <Button x:Name="delete_data_button" Content="Удалить" Height = "30" Width="160"  Click = "delete_device_btn" />
+            <Button x:Name="edit_data_button" Content="Изменить оборудование" Width="160" Margin="30,0,0,0" Height = "30"  Click = "edit_device_btn" />
+            <Button x:Name="BtnConfirm_add_device" Content="Добавить оборудование" Width="160" Height = "30" Margin="30,0,0,0"  Click="btn_add_device"/>
+        </StackPanel>
+        <StackPanel x:Name="panel_selected_device" Grid.Row="1" Grid.Column="1"  Visibility="Hidden" Width="300">
+            <TextBlock Text="Название девайса" Height="30"/>
+            <TextBox  Text ="{Binding name_device}" Margin="0,0,0,10"/>
+
+            <TextBlock Text="Модель девайса" Height="30"/>
+            <TextBox  Text ="{Binding model_device}" Margin="0,0,0,10"/>
+            
+            <TextBlock Text="Дата изготовления:" Height="30"/>
+            <TextBox  Text ="{Binding dateOfDevelopment}" Margin="0,0,0,10"/>
+            <TextBlock Text="Филлиал:" Height="30"/>
+            <TextBox  Text ="{Binding id_branch}" Margin="0,0,0,10"/>
+            <TextBlock Text="Когда попал в филлиал:" Height="30"/>
+            <TextBox  Text ="{Binding time_branch_approach}" Margin="0,0,0,10"/>
+
+            <Button Height=" 30" Content="Сохранить" Width="150" Click ="btn_add_device_confirm"/>
+        </StackPanel>
+
+
+
+
+        <StackPanel x:Name="Message_Send" Grid.Row="1" Grid.Column="1"  Visibility="Hidden" Margin="137,0,138,0">
+            <TextBlock Text="От кого:" Height="30"/>
+            <TextBox  Text ="{Binding from_id_staff_member}" Margin="0,0,0,10" IsReadOnly="True"/>
+
+            <TextBlock Text="Получатель:" Height="30"/>
+            <TextBox  Text ="{Binding to_id_staff_member}" Margin="0,0,0,10"/>
+
+            <TextBlock Text="Содержание сообщения:" Height="30"/>
+            <TextBox  Text ="{Binding message_content}" Margin="0,0,0,10"/>
+            <Button Height=" 30" Content="Отправить сообщение" Width="150" Click ="Send_Message"/>
+        </StackPanel>
+
+
+
+
+        
+    
+        <ListView x:Name ="list_of_price_lists" Visibility ="Hidden" Grid.Column="1" Grid.Row="1">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <StackPanel Width="auto" Orientation="Vertical" HorizontalAlignment="Left">
+                            <TextBlock Width="auto" TextWrapping="Wrap" Height="auto" Margin="0,20,0,0">
+                                <Run Text="ID сотрудника:"/>
+                                <Run Text="{Binding id_purchase_list}" />
+                            </TextBlock>
+                            <TextBlock Width="auto" TextWrapping="NoWrap" Height="auto">
+                                <Run Text="Список товар для покупки" />
+                                <Run Text="{Binding items_to_buy}" />
+                            </TextBlock>
+                            <TextBlock Width="auto" TextWrapping="NoWrap" Height="auto">
+                                <Run Text="Цена прайс листа:" />
+                                <Run Text="{Binding price}" />
+                            </TextBlock>
+                            <TextBlock Width="auto" TextWrapping="NoWrap" Height="auto">
+                                <Run Text="Статус листа:" />
+                                <Run Text="{Binding purchase_list_status}" />
+                            </TextBlock>
+
+                        </StackPanel>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+
+        </ListView>
+       
+        <StackPanel x:Name ="panel_create_PriceList" Grid.Column ="1" Grid.Row ="1" Orientation="Vertical" VerticalAlignment="Center" Visibility="Hidden">
+            <TextBlock Text="Содержимое Прайс листа" Margin="0,10,0,0"/>
+            <TextBox Text="{Binding items_to_buy}" Width="250" Height="50" Margin="0,10,0,0" ></TextBox>
+            <TextBlock Text="Итоговая цена листа(с плавающей точкой)"  Margin="0,10,0,0"/>
+            <TextBox Text="{Binding price}" Width="250" Height="30"></TextBox>
+            <Button x:Name="Save_button" Width="100" Margin =" 0, 20,0,0" Content="Сохранить" Height="30" Click="Save_Price_List"/>
+        </StackPanel>
+        <StackPanel x:Name="Edit_Price_list_panel" Grid.Column="1" Grid.Row="2" Visibility="Hidden" Orientation="Horizontal" HorizontalAlignment="Center" >
+            <Button  Content="Сформировать pdf"  Height ="30" Width="160" Click="createPdf" />
+            <Button  Content="Создать Прайс Лист" Width="160" Height ="30" Margin="50,0,0,0" Click="Add_Price_List"/>
+        </StackPanel>
+
+        <ListView x:Name ="list_of_requests" Visibility ="Hidden" Grid.Column="1" Grid.Row="1">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <StackPanel Width="auto" Orientation="Vertical" HorizontalAlignment="Left" Grid.Column="1" Margin="50, 0, 0, 0">
+                            <TextBlock Width="auto" TextWrapping="Wrap" Height="auto">
+                                <Run Text="ID запроса" FontSize="16"/>
+                                <Run Text="{Binding id_repair_request}" FontSize="16"/>
+                            </TextBlock>
+                            <TextBlock Width="auto" TextWrapping="NoWrap" Height="auto">
+                                <Run Text="Содержимое запроса" FontSize="16"/>
+                                <Run Text="{Binding content_request}" FontSize="16" />
+                            </TextBlock>
+                            <TextBlock Width="auto" TextWrapping="NoWrap" Height="auto">
+                                <Run Text="Статус запроса" FontSize="16" />
+                                <Run Text="{Binding request_status}" FontSize="16"/>
+                            </TextBlock>
+                            <TextBlock Width="auto" TextWrapping="NoWrap" Height="auto" FontSize="16">
+                                <Run Text="Дата выпсука:"/>
+                                <Run Text="{Binding time_request}" />
+                            </TextBlock>
+
+                        </StackPanel>
+
+                    </Grid>
+
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <StackPanel x:Name ="panel_edit_request" Grid.Column ="1" Grid.Row ="1" Orientation="Vertical" VerticalAlignment="Center" Visibility="Hidden">
+
+            <TextBlock Text="Статус Запроса" Width="250" Margin="0,10,0,0"/>
+            <TextBox Text="{Binding request_status}" Width="250" Height="30"></TextBox>
+            <Button Width="100" Margin =" 0, 20,0,0" Content="Сохранить" Height="30" Click="Save_request_status" />
+        </StackPanel>
+        <Button x:Name="btn_change_request_status" Content="Изменить статус запроса" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="2" Width="250" Height="30" Visibility="Hidden" Click="Btn_edit_request"/>
+        
+        
+        
+        
+        <ListView x:Name ="list_of_transfetDevice" Visibility ="Hidden" Grid.Column="1" Grid.Row="1">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <StackPanel Width="auto" Orientation="Vertical" HorizontalAlignment="Left" Grid.Column="1" Margin="50, 0, 0, 0">
+                            <TextBlock Width="auto" TextWrapping="Wrap" Height="auto">
+                                <Run Text="ID запроса" FontSize="16"/>
+                                <Run Text="{Binding id_transfer}" FontSize="16"/>
+                            </TextBlock>
+                            <TextBlock Width="auto" TextWrapping="NoWrap" Height="auto">
+                                <Run Text="ID оборудования" FontSize="16"/>
+                                <Run Text="{Binding id_device}" FontSize="16" />
+                            </TextBlock>
+                            <TextBlock Width="auto" TextWrapping="NoWrap" Height="auto">
+                                <Run Text="Из какого филлиала" FontSize="16" />
+                                <Run Text="{Binding branch_name_removed}" FontSize="16"/>
+                            </TextBlock>
+                            <TextBlock Width="auto" TextWrapping="NoWrap" Height="auto" FontSize="16">
+                                <Run Text="В какой филлиал:"/>
+                                <Run Text="{Binding branch_name_moved}" />
+                            </TextBlock>
+                            <TextBlock Width="auto" TextWrapping="NoWrap" Height="auto" FontSize="16">
+                                <Run Text="Дата перехода:"/>
+                                <Run Text="{Binding time_removed}" />
+                            </TextBlock>
+
+                        </StackPanel>
+
+                    </Grid>
+
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <StackPanel  x:Name="Add_transferLog" Orientation="Horizontal" HorizontalAlignment="Center" Visibility="Hidden" Grid.Row="2" Grid.Column="1" Margin="0,0,0,78" >
+            <Button  Content="Добавить перемещение оборудования"  Height = "30"   Click="btn_add_transferlog"/>
+        </StackPanel>
+        <StackPanel x:Name ="panel_add_transfer" Grid.Column ="1" Grid.Row ="1" Orientation="Vertical" VerticalAlignment="Center" Visibility="Hidden">
+
+            <TextBlock Text="ID обрудования" Width="250" Margin="0,10,0,0"/>
+            <TextBox Text="{Binding id_device}" Width="250" Height="30"></TextBox>
+            <TextBlock Text="Откуда взяли" Width="250" Margin="0,10,0,0"/>
+            <TextBox Text="{Binding branch_name_removed}" Width="250" Height="30"></TextBox>
+            <TextBlock Text="Куда перемитсли" Width="250" Margin="0,10,0,0"/>
+            <TextBox Text="{Binding branch_name_moved}" Width="250" Height="30"></TextBox>
+            <TextBlock Text="Куда положили" Width="250" Margin="0,10,0,0"/>
+            <TextBox Text="{Binding time_removed}" Width="250" Height="30"></TextBox>
+            <Button Width="100" Margin =" 0, 20,0,0" Content="Сохранить" Height="30" Click="Save_new_transferDevice_log" />
+        </StackPanel>
+       
+    </Grid>
+</Page>
